@@ -15,12 +15,42 @@ body{
 	height:75%;
 	width:100%;
 }
+
 #separador
 {
 	height:5%;
 	width:100%;
 	background-color:white;
 }
+
+#separadorcolor0
+{
+	height:5%;
+	width:100%;
+	background-color:white;
+}
+
+#separadorcolor1
+{
+	height:0.5%;
+	width:100%;
+	background-color:#0070a8;
+}
+
+#separadorcolor2
+{
+	height:0.5%;
+	width:100%;
+	background-color:#BC007D;
+}
+
+#separadorcolor3
+{
+	height:0.5%;
+	width:100%;
+	background-color:#747474;
+}
+
 #container2
 {
 	height:20%;
@@ -166,12 +196,34 @@ td{
 }
 
 
-.curso .nombre{
+.curso .nombre0{
 color: #000000;
 font-weight:bold;
 text-decoration: none;
 font-size:15px;
 }
+
+.curso .nombre1{
+color: #0070a8;
+font-weight:bold;
+text-decoration: none;
+font-size:15px;
+}
+
+.curso .nombre2{
+color: #BC007D;
+font-weight:bold;
+text-decoration: none;
+font-size:15px;
+}
+
+.curso .nombre3{
+color: #747474;
+font-weight:bold;
+text-decoration: none;
+font-size:15px;
+}
+
 
 
 .curso:hover .nombre{
@@ -249,6 +301,22 @@ font-size:15px;
 	top:-25px;
 	right:-25px;
 	background:url(images/close.png) no-repeat;
+}
+.popup_color{
+	width:900px;
+	max-height:500px;
+	background:#FFF;
+	padding:10px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-100px;
+	margin-left:-200px;
+	-moz-box-shadow: 0 0 30px #888;
+	-webkit-box-shadow: 0 0 30px #888;
+	box-shadow: 0 0 30px #888;
+	z-index:5;
+	display:none;
 }
 /* ---------------------------- table -----------------------------*/
 
