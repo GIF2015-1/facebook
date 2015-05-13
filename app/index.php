@@ -29,7 +29,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <?php
-// This file is part of Moodle - http://moodle.org/ ---
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -50,13 +50,13 @@
  *
  * @package    local
  * @subpackage facebook
- * @copyright  2013 Francisco García Ralph (francisco.garcia.ralph@gmail.com)
+ * @copyright  2013 Francisco GarcÃ­a Ralph (francisco.garcia.ralph@gmail.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 
-global $DB, $USER, $CFG;
+global $DB, $USER, $CFG, $comment;
 require_once 'config.php';
 
 
@@ -92,7 +92,7 @@ $connecturl= new moodle_url('/local/facebook/connect.php');
 							<img src="images/lista.png">
 						</td>
 						<td>
-							<a href="<?php echo $messageurl; ?>" target=”_blank”><?php echo get_string('notificationsettings', 'local_facebook');?></a>
+							<a href="<?php echo $messageurl; ?>" target=â€�_blankâ€�><?php echo get_string('notificationsettings', 'local_facebook');?></a>
 						</td>
 					</tr>	
 					<tr>
@@ -100,7 +100,7 @@ $connecturl= new moodle_url('/local/facebook/connect.php');
 							<img src="images/lista.png">
 						</td>
 						<td>
-							<a href="<?php echo $connecturl; ?>" target=”_blank”><?php echo get_string('connectheading', 'local_facebook'); ?></a>
+							<a href="<?php echo $connecturl; ?>" target=â€�_blankâ€�><?php echo get_string('connectheading', 'local_facebook'); ?></a>
 						</td>
 					</tr>	
 					</table>
@@ -119,7 +119,7 @@ $connecturl= new moodle_url('/local/facebook/connect.php');
 							<img src="images/lista.png">
 						</td>
 						<td>
-							<a href="<?php echo $tutorial_link; ?>" target=”_blank” ><?php echo $tutorial_name; ?></a>
+							<a href="<?php echo $tutorial_link; ?>" target=â€�_blankâ€� ><?php echo $tutorial_name; ?></a>
 						</td>
 					</tr>	
 					<tr>
@@ -139,17 +139,20 @@ $connecturl= new moodle_url('/local/facebook/connect.php');
 		
 		</div>
 		<!-- FIN BARRA LATERAL !-->
-		<?php 
-$user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> $facebook_id,'status'=>1));
+		
+		
+		<?php
+		
+$user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));
 
-
+ 
 
 
 if($user_facebook_info!=false){
 $moodle_id=$user_facebook_info->moodleid;
 $lastvisit=$user_facebook_info->lasttimechecked;
 $user_info=$DB->get_record('user',array('id'=>$moodle_id));
-$user_course = enrol_get_users_courses($moodle_id);
+$user_course = enrol_get_users_courses($moodle_id); // busca cursos del usuario
  
 
 
@@ -193,7 +196,7 @@ foreach($user_course as $courses){
 	$total = $totalpost+$totalresource+$totalurl;
 	
 echo'<a class="inline link_curso" href="#'.$courseid.'"><li class="curso">
-<p class="nombre"><img src="images/lista_curso.png"> '.$fullname.'</p>';
+<p class="nombre0"><img src="images/lista_curso.png"> '.$fullname.'</p>';
 
 if($total > 0){
 echo'<span class="numero_notificaciones">'.$total.'</span>
@@ -244,6 +247,7 @@ $data_array = record_sort($data_array, 'date', 'true');
 
 
 ?>
+
 			</li></a>
 <div class="popup_curso" id="<?php echo $courseid ?>">
 <a href="#" class="close"></a>
@@ -260,6 +264,8 @@ $data_array = record_sort($data_array, 'date', 'true');
 </tr>
 </thead>
 <tbody>
+
+
 <?php	
 
 foreach ($data_array as $data){
@@ -284,7 +290,7 @@ foreach ($data_array as $data){
 
 	echo'</center></td>
 
-<td><a href="'.$data['link'].'" target=”_blank”>'.$data['title'].'</a></td>
+<td><a href="'.$data['link'].'" target=â€�_blankâ€�>'.$data['title'].'</a></td>
 <td style="font-size:11px"><b>'.$data['from'].'</b></td>
 
 		<td>'.$date.'</td>
@@ -298,18 +304,21 @@ echo '</tbody>
 
  </div>
   </div>';
-
-
+//ASDADSSADDSADASDAS
+  
 }
 
 ?>
-
  </ul>
 
  </tbody>
+ 
 		</div>
 	</div>
 	<div id="separador">
+	<br>
+	</div>
+	<div id="separadorcolor0">
 	<br>
 	</div>
 	<div id="container2">
@@ -344,7 +353,7 @@ $DB->update_record('facebook_user', $user_facebook_info);
 <div id="separador">
 	<br>
 	</div>
-	<div id="container2">
+	<div id="container2
 <table width="100%">
  
  <tr>
