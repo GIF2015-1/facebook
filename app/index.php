@@ -19,6 +19,7 @@
 			});
 		</script>
 		<div id="fb-root"></div>
+
 <script>
 
 	(function(d, s, id) {
@@ -56,7 +57,7 @@
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 
-global $DB, $USER, $CFG, $comment;
+global $DB, $USER, $CFG, $comment, $ecolor;
 require_once 'config.php';
 
 
@@ -70,8 +71,16 @@ $tutorial_name=$CFG->fbktutorialsN;
 $tutorial_link=$CFG->fbktutorialsL;
 $messageurl= new moodle_url('/message/edit.php');
 $connecturl= new moodle_url('/local/facebook/connect.php');
+$prioridadurl= new moodle_url('/local/facebook/app/prioridad.php');
+$colorurl= new moodle_url('/local/facebook/app/color.php');
 ?>
+ 		<?php
+		$ecolor='color0';
+		
+		$ecolor=$_REQUEST['color'];
 
+    
+		?>
 <div id="wrapper">
 	<div id="container1" class="clearfix">
 		<br>
@@ -100,9 +109,26 @@ $connecturl= new moodle_url('/local/facebook/connect.php');
 							<img src="images/lista.png">
 						</td>
 						<td>
-							<a href="<?php echo $connecturl; ?>" target=â€�_blankâ€�><?php echo get_string('connectheading', 'local_facebook'); ?></a>
+							<a href="<?php echo $connecturl; ?>" target=â€�_blankâ€�><?php echo get_string('connectheading', 'local_facebook'); ?></a> 
 						</td>
 					</tr>	
+					<tr>
+					<td>
+							<img src="images/lista.png">
+						</td>
+						<td>
+							<a href="<?php echo $colorurl; ?>" target=â€�_blankâ€�><?php echo 'Cambia el color'; ?></a>
+						</td>
+						</tr> 
+						<tr>
+						<td>
+							<img src="images/lista.png">
+						</td>
+						<td>
+							<a href="<?php echo $prioridadurl; ?>" target=â€�_blankâ€�><?php echo 'Cambia tu prioridad'; ?></a>
+						</td>
+						
+					</tr>   
 					</table>
 				</div>
 			</div>
@@ -160,6 +186,7 @@ $user_course = enrol_get_users_courses($moodle_id); // busca cursos del usuario
  echo'
 <div class="cuerpo">
 <h1>'.get_string('courses', 'local_facebook').'</h1>
+							
 
  <ul id="cursos">';
 
@@ -196,7 +223,7 @@ foreach($user_course as $courses){
 	$total = $totalpost+$totalresource+$totalurl;
 	
 echo'<a class="inline link_curso" href="#'.$courseid.'"><li class="curso">
-<p class="nombre0"><img src="images/lista_curso.png"> '.$fullname.'</p>';
+<p class="'.$ecolor.'"><img src="images/lista_curso.png"> '.$fullname.'</p>';
 
 if($total > 0){
 echo'<span class="numero_notificaciones">'.$total.'</span>
@@ -318,7 +345,7 @@ echo '</tbody>
 	<div id="separador">
 	<br>
 	</div>
-	<div id="separadorcolor0">
+	<div id="<?php echo $ecolor ?>">
 	<br>
 	</div>
 	<div id="container2">
