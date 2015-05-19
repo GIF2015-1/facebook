@@ -23,28 +23,28 @@ body{
 	background-color:white;
 }
 
-#separadorcolor0
+#color0
 {
 	height:5%;
 	width:100%;
 	background-color:white;
 }
 
-#separadorcolor1
+#color1
 {
 	height:0.5%;
 	width:100%;
 	background-color:#0070a8;
 }
 
-#separadorcolor2
+#color2
 {
 	height:0.5%;
 	width:100%;
 	background-color:#BC007D;
 }
 
-#separadorcolor3
+#color3
 {
 	height:0.5%;
 	width:100%;
@@ -88,7 +88,7 @@ html[xmlns] .clearfix {
 {
 	width:inherit;
 	color:#4dc8f2;
-	height:105px;
+	height:130px;
 	background-color:white;
 	margin:15px 0 0 10px;
 	font-size:13px;
@@ -196,28 +196,28 @@ td{
 }
 
 
-.curso .nombre0{
+.curso .color0{
 color: #000000;
 font-weight:bold;
 text-decoration: none;
 font-size:15px;
 }
 
-.curso .nombre1{
+.curso .color1{
 color: #0070a8;
 font-weight:bold;
 text-decoration: none;
 font-size:15px;
 }
 
-.curso .nombre2{
+.curso .color2{
 color: #BC007D;
 font-weight:bold;
 text-decoration: none;
 font-size:15px;
 }
 
-.curso .nombre3{
+.curso .color3{
 color: #747474;
 font-weight:bold;
 text-decoration: none;
