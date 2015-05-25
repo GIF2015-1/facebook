@@ -57,7 +57,7 @@
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 
-global $DB, $USER, $CFG, $comment, $ecolor;
+global $DB, $USER, $CFG, $comment, $ecolor;//Variables globales
 require_once 'config.php';
 
 
@@ -73,14 +73,11 @@ $messageurl= new moodle_url('/message/edit.php');
 $connecturl= new moodle_url('/local/facebook/connect.php');
 $prioridadurl= new moodle_url('/local/facebook/app/prioridad.php');
 $colorurl= new moodle_url('/local/facebook/app/color.php');
-?>
- 		<?php
-		$ecolor='color0';
-		
-		$ecolor=$_REQUEST['color'];
+//Variable con la eleccion del color de WEBC
+$ecolor='color0';
+$ecolor=$_REQUEST['color'];
 
-    
-		?>
+?>
 <div id="wrapper">
 	<div id="container1" class="clearfix">
 		<br>
@@ -162,17 +159,13 @@ $colorurl= new moodle_url('/local/facebook/app/color.php');
 		<br><br>
 		<center><div class="fb-like" data-href="http://apps.facebook.com/webcursosuai" 
 				data-width="175"  data-layout="box_count" data-show-faces="false" data-send="false"></div><center>
-		
 		</div>
-		<!-- FIN BARRA LATERAL !-->
+<!-- FIN BARRA LATERAL !-->
 		
 		
-		<?php
+<?php
 		
 $user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));
-
- 
-
 
 if($user_facebook_info!=false){
 $moodle_id=$user_facebook_info->moodleid;
@@ -180,8 +173,6 @@ $lastvisit=$user_facebook_info->lasttimechecked;
 $user_info=$DB->get_record('user',array('id'=>$moodle_id));
 $user_course = enrol_get_users_courses($moodle_id); // busca cursos del usuario
  
-
-
 
  echo'
 <div class="cuerpo">
@@ -277,20 +268,20 @@ $data_array = record_sort($data_array, 'date', 'true');
 
 			</li></a>
 <div class="popup_curso" id="<?php echo $courseid ?>">
-<a href="#" class="close"></a>
-<div class="contenido_popup">
-<?php echo get_string('tabletittle', 'local_facebook').$fullname; ?><br>
-<table class="tablesorter" border="0" width="100%"  style="font-size:13px" >
-<thead>
-<tr>
-<th width="8%"></th>
-<th width="52%"><?php echo get_string('rowtittle', 'local_facebook'); ?></th>
-<th width="20%"><?php echo get_string('rowfrom', 'local_facebook'); ?></th>
-<th width="20%"><?php echo get_string('rowdate', 'local_facebook'); ?></th>
+	<a href="#" class="close"></a>
+	<div class="contenido_popup">
+		<?php echo get_string('tabletittle', 'local_facebook').$fullname; ?><br>
+		<table class="tablesorter" border="0" width="100%"  style="font-size:13px" >
+		<thead>
+			<tr>
+			<th width="8%"></th>
+			<th width="52%"><?php echo get_string('rowtittle', 'local_facebook'); ?></th>
+			<th width="20%"><?php echo get_string('rowfrom', 'local_facebook'); ?></th>
+			<th width="20%"><?php echo get_string('rowdate', 'local_facebook'); ?></th>
 
-</tr>
-</thead>
-<tbody>
+			</tr>
+		</thead>
+		<tbody>
 
 
 <?php	
@@ -329,10 +320,9 @@ echo '</tbody>
 </table> 
 
 
- </div>
-  </div>';
-//ASDADSSADDSADASDAS
-  
+ 	</div>
+</div>';
+
 }
 
 ?>
@@ -345,7 +335,7 @@ echo '</tbody>
 	<div id="separador">
 	<br>
 	</div>
-	<div id="<?php echo $ecolor ?>">
+	<div id="<?php echo $ecolor ?>"> <!--Color franja inferior!-->
 	<br>
 	</div>
 	<div id="container2">
