@@ -56,7 +56,7 @@
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 
-global $DB, $USER, $CFG, $ecolor;
+global $DB, $USER, $CFG, $ecolor;//variables globales
 require_once 'config.php';
 
 
@@ -68,6 +68,7 @@ $app_name= $CFG->fbkAppNAME;
 $app_email= $CFG->fbkemail;
 $tutorial_name=$CFG->fbktutorialsN;
 $tutorial_link=$CFG->fbktutorialsL;
+// moodle_url de php necesarios
 $messageurl= new moodle_url('/message/edit.php');
 $connecturl= new moodle_url('/local/facebook/connect.php');
 $colorurl= new moodle_url('/local/facebook/app/color.php');
@@ -75,13 +76,11 @@ $prioridadurl=new moodle_url('/local/facebook/app/prioridad.php');
 ?>
 
 <?php
-		$ecolor='color0';
-		
-		$ecolor=$_REQUEST['color'];
-
-    
-		?>
-
+	// Variable con eleccion de color 
+	$ecolor='color0';
+	$ecolor=$_REQUEST['color'];
+?>
+<!--Inicio barra lateral!-->
 <div id="wrapper">
 	<div id="container1" class="clearfix">
 		<br>
@@ -170,9 +169,6 @@ $prioridadurl=new moodle_url('/local/facebook/app/prioridad.php');
 		
 $user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));
 
- 
-
-
 if($user_facebook_info!=false){
 $moodle_id=$user_facebook_info->moodleid;
 $lastvisit=$user_facebook_info->lasttimechecked;
@@ -188,37 +184,19 @@ $user_course = enrol_get_users_courses($moodle_id); // busca cursos del usuario
  <ul id="cursos">';
 
  
-
+//muestra todos los cursos con un formulario para asignarle la prioridad
 foreach($user_course as $courses){
-	
-
-	
 	$fullname=$courses->fullname;
 	$courseid=$courses->id;
 	$shortname=$courses->shortname;
-
-	
-echo'<li>
-<p class="'.$ecolor.'"><img src="images/lista_curso.png"> '.$fullname.'<br></p>';
+echo'	<li>
+	<p class="'.$ecolor.'"><img src="images/lista_curso.png"> '.$fullname.'<br></p>';
 
 echo '<form action="index.php" method="post">
 Prioridad <input type="text" name="prioridad" value="prioridad" checked="checked" /> 
-
-		<br>
-		<br>
-		'
-
-
-
-
-?>
-		
-
-
-<?php //ASDADSSADDSADASDAS
-  
-}
-
+		<br><br>';
+  }
+// Boton Guardar prioridades
 echo '<input type="image" src="images/guardarprioridad.jpg" value="Guardar prioridades">';''
 		
 ?>
@@ -228,53 +206,45 @@ echo '<input type="image" src="images/guardarprioridad.jpg" value="Guardar prior
  
 		</div>
 	</div>
-	<div id="separador">
+<div id="separador">
 	<br>
-	</div>
-	<div id="<?php echo $ecolor ?>">
+</div>
+<div id="<?php echo $ecolor ?>">
 	<br>
-	</div>
-	<div id="container2">
-<table width="100%">
+</div>
+<div id="container2">
+	<table width="100%">
  
- <tr>
- <td align="left"><img  src="images/logo_webcursos_abajo.png"> </td>
- <td align="right"><img  src="images/logo_abajo.png"></td>
-  </tr>
- </table>
-	</div>
+	 <tr>
+		 <td align="left"><img  src="images/logo_webcursos_abajo.png"> </td>
+		 <td align="right"><img  src="images/logo_abajo.png"></td>
+	</tr>
+	 </table>
+</div>
 </div>
 <div id="overlay"></div>
 <?php
 $user_facebook_info->lasttimechecked=time();
 $DB->update_record('facebook_user', $user_facebook_info);
-}else{
-
-
-	echo'
-
-
+}
+else{	echo'
 <div class="cuerpo">
 		 <h1>'.get_string('existtittle', 'local_facebook').'</h1>
 		<p>'.get_string('existtext', 'local_facebook').'<a href="'.$connecturl.'" >'.get_string('existlink', 'local_facebook').'</a></p>
 		</div>
-						
-		';
-
-
- ?>
+		'; ?>
 <div id="separador">
 	<br>
-	</div>
-	<div id="container2
+</div>
+<div id="container2
 <table width="100%">
  
- <tr>
- <td align="left"><img  src="images/logo_webcursos_abajo.png"> </td>
- <td align="right"><img  src="images/logo_abajo.png"></td>
-  </tr>
+ 	<tr>
+ 		<td align="left"><img  src="images/logo_webcursos_abajo.png"> </td>
+	 	<td align="right"><img  src="images/logo_abajo.png"></td>
+  	</tr>
  </table>
-	</div>
+</div>
 </div>
 
  
@@ -296,3 +266,4 @@ $DB->update_record('facebook_user', $user_facebook_info);
  	}
  	return $records;
  }
+?>
