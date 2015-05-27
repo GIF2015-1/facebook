@@ -57,7 +57,7 @@
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 
-global $DB, $USER, $CFG, $comment, $ecolor;//Variables globales
+global $DB, $USER, $CFG, $comment, $ecolor;
 require_once 'config.php';
 
 
@@ -73,11 +73,17 @@ $messageurl= new moodle_url('/message/edit.php');
 $connecturl= new moodle_url('/local/facebook/connect.php');
 $prioridadurl= new moodle_url('/local/facebook/app/prioridad.php');
 $colorurl= new moodle_url('/local/facebook/app/color.php');
-//Variable con la eleccion del color de WEBC
-$ecolor='color0';
-$ecolor=$_REQUEST['color'];
-
 ?>
+ 		<?php
+
+ 		session_start();
+		$ecolor='color0';
+		
+		$ecolor=$_REQUEST['color'];
+
+		$_SESSION['color'] = $ecolor;
+    
+		?>
 <div id="wrapper">
 	<div id="container1" class="clearfix">
 		<br>
@@ -159,13 +165,17 @@ $ecolor=$_REQUEST['color'];
 		<br><br>
 		<center><div class="fb-like" data-href="http://apps.facebook.com/webcursosuai" 
 				data-width="175"  data-layout="box_count" data-show-faces="false" data-send="false"></div><center>
+		
 		</div>
-<!-- FIN BARRA LATERAL !-->
+		<!-- FIN BARRA LATERAL !-->
 		
 		
-<?php
+		<?php
 		
 $user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));
+
+ 
+
 
 if($user_facebook_info!=false){
 $moodle_id=$user_facebook_info->moodleid;
@@ -173,6 +183,8 @@ $lastvisit=$user_facebook_info->lasttimechecked;
 $user_info=$DB->get_record('user',array('id'=>$moodle_id));
 $user_course = enrol_get_users_courses($moodle_id); // busca cursos del usuario
  
+
+
 
  echo'
 <div class="cuerpo">
@@ -190,7 +202,8 @@ foreach($user_course as $courses){
 	$fullname=$courses->fullname;
 	$courseid=$courses->id;
 	$shortname=$courses->shortname;
-	
+	//$prioridadd = $_REQUEST('prioridad');
+	//echo $prioridadd;
 
 	$params = array(1,1,$courseid,$lastvisit);
 	// cuenta todos los recursos desde la ultima vez que se conecto a la app.
@@ -219,6 +232,27 @@ echo'<a class="inline link_curso" href="#'.$courseid.'"><li class="curso">
 if($total > 0){
 echo'<span class="numero_notificaciones">'.$total.'</span>
 ';
+
+$params = array(1,1,$courseid,$lastvisit);
+// cuenta todos los recursos desde la ultima vez que se conecto a la app.
+$sql = "SELECT count(*) FROM {course_modules} as cm
+	inner join {modules} as m on (cm.module = m.id)
+	where m.name in ('label','resource') and cm.visible = ? and m.visible = ? and course = ? and added > ?";
+
+$totalresource = $DB->count_records_sql($sql, $params);
+// cuenta todos los links desde la ultima vez que se conecto a la app.
+$sql = "SELECT count(*) FROM {course_modules} as cm
+	inner join {modules} as m on (cm.module = m.id)
+	where m.name in ('label','url') and cm.visible = ? and m.visible = ? and course = ? and added > ?";
+
+$totalurl = $DB->count_records_sql($sql, $params);
+// cuenta todos los post desde la ultima vez que se conecto a la app.
+$sql = 'SELECT count(*) FROM {forum_posts} AS posts INNER JOIN {forum_discussions} AS discussions ON (posts.discussion=discussions.id) WHERE discussions.course = ? AND posts.modified > ? ';
+$params = array($courseid,$lastvisit);
+$totalpost = $DB->count_records_sql($sql, $params);
+
+
+$total = $totalpost+$totalresource+$totalurl;
 }
 
 
@@ -268,20 +302,20 @@ $data_array = record_sort($data_array, 'date', 'true');
 
 			</li></a>
 <div class="popup_curso" id="<?php echo $courseid ?>">
-	<a href="#" class="close"></a>
-	<div class="contenido_popup">
-		<?php echo get_string('tabletittle', 'local_facebook').$fullname; ?><br>
-		<table class="tablesorter" border="0" width="100%"  style="font-size:13px" >
-		<thead>
-			<tr>
-			<th width="8%"></th>
-			<th width="52%"><?php echo get_string('rowtittle', 'local_facebook'); ?></th>
-			<th width="20%"><?php echo get_string('rowfrom', 'local_facebook'); ?></th>
-			<th width="20%"><?php echo get_string('rowdate', 'local_facebook'); ?></th>
+<a href="#" class="close"></a>
+<div class="contenido_popup">
+<?php echo get_string('tabletittle', 'local_facebook').$fullname; ?><br>
+<table class="tablesorter" border="0" width="100%"  style="font-size:13px" >
+<thead>
+<tr>
+<th width="8%"></th>
+<th width="52%"><?php echo get_string('rowtittle', 'local_facebook'); ?></th>
+<th width="20%"><?php echo get_string('rowfrom', 'local_facebook'); ?></th>
+<th width="20%"><?php echo get_string('rowdate', 'local_facebook'); ?></th>
 
-			</tr>
-		</thead>
-		<tbody>
+</tr>
+</thead>
+<tbody>
 
 
 <?php	
@@ -320,9 +354,10 @@ echo '</tbody>
 </table> 
 
 
- 	</div>
-</div>';
-
+ </div>
+  </div>';
+//ASDADSSADDSADASDAS
+  
 }
 
 ?>
@@ -335,7 +370,7 @@ echo '</tbody>
 	<div id="separador">
 	<br>
 	</div>
-	<div id="<?php echo $ecolor ?>"> <!--Color franja inferior!-->
+	<div id="<?php echo $ecolor ?>">
 	<br>
 	</div>
 	<div id="container2">
