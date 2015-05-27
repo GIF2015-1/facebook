@@ -56,12 +56,12 @@
  */
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
-
+// Variables globales
 global $DB, $USER, $CFG, $comment, $ecolor;
 require_once 'config.php';
 
 
-
+//Inicio Fb
 $facebook = new Facebook($config);
 $facebook_id= $facebook->getUser();
 
@@ -73,24 +73,20 @@ $messageurl= new moodle_url('/message/edit.php');
 $connecturl= new moodle_url('/local/facebook/connect.php');
 $prioridadurl= new moodle_url('/local/facebook/app/prioridad.php');
 $colorurl= new moodle_url('/local/facebook/app/color.php');
-?>
- 		<?php
 
- 		session_start();
-		$ecolor='color0';
-		
-		$ecolor=$_REQUEST['color'];
-
-		$_SESSION['color'] = $ecolor;
+//Inicio de sesión que guarda la elección del color
+session_start();
+$ecolor='color0';
+$ecolor=$_REQUEST['color'];
+$_SESSION['color'] = $ecolor;
     
-		?>
+?>
+<!--Inicio barra lateral!-->
 <div id="wrapper">
 	<div id="container1" class="clearfix">
 		<br>
-		
 		<div class="lateral">
 			<br>
-			
 			<div class="box">
 				<div class=titulo>
 				<img src="images/logo.png" height="25" width="20" align="left">WebCursos UAI
@@ -172,39 +168,28 @@ $colorurl= new moodle_url('/local/facebook/app/color.php');
 		
 		<?php
 		
-$user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));
-
- 
-
+$user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));//Obtiene los datos de facebook del usuario
 
 if($user_facebook_info!=false){
+//Asigna a cada variable de valor de $user_facebook_info
 $moodle_id=$user_facebook_info->moodleid;
 $lastvisit=$user_facebook_info->lasttimechecked;
 $user_info=$DB->get_record('user',array('id'=>$moodle_id));
 $user_course = enrol_get_users_courses($moodle_id); // busca cursos del usuario
- 
-
-
-
+ //Cuerpo de WEBC
  echo'
 <div class="cuerpo">
 <h1>'.get_string('courses', 'local_facebook').'</h1>
 							
-
  <ul id="cursos">';
 
  
-
+//Recorre los cursos del alumno
 foreach($user_course as $courses){
-	
-
-	
 	$fullname=$courses->fullname;
 	$courseid=$courses->id;
 	$shortname=$courses->shortname;
-	//$prioridadd = $_REQUEST('prioridad');
-	//echo $prioridadd;
-
+	
 	$params = array(1,1,$courseid,$lastvisit);
 	// cuenta todos los recursos desde la ultima vez que se conecto a la app.
 	$sql = "SELECT count(*) FROM {course_modules} as cm
@@ -225,10 +210,10 @@ foreach($user_course as $courses){
 	
 	
 	$total = $totalpost+$totalresource+$totalurl;
-	
+// Muestra los cursos del alumno	
 echo'<a class="inline link_curso" href="#'.$courseid.'"><li class="curso">
 <p class="'.$ecolor.'"><img src="images/lista_curso.png"> '.$fullname.'</p>';
-
+//Muestra los globos de notificacion en los cursos
 if($total > 0){
 echo'<span class="numero_notificaciones">'.$total.'</span>
 ';
@@ -268,12 +253,14 @@ $data_post=$DB->get_records_sql($sql, $params);
 $data_link=$DB->get_records('url', array('course'=>$courseid));
 $data_resource=$DB->get_records('resource', array('course'=>$courseid));
 $data_array= array();
+
 foreach ($data_post as $post){
 	$user=$DB->get_record('user',array('id'=>$post->userid));
 	$posturl= new moodle_url('/mod/forum/discuss.php',array('d'=>$post->dis_id));
 	$data_array[]=array('dibujo'=>1,'link'=>$posturl , 'title'=>$post->subject, 'from'=>$user->firstname.' '.$user->lastname, 'date'=>$post->modified);
 
 }
+
 foreach ($data_resource as $resource){
 
 	$cm = get_coursemodule_from_instance('resource', $resource->id, $resource->course, false, MUST_EXIST);
@@ -301,8 +288,9 @@ $data_array = record_sort($data_array, 'date', 'true');
 ?>
 
 			</li></a>
+<!--Novedades de cada ramo!-->
 <div class="popup_curso" id="<?php echo $courseid ?>">
-<a href="#" class="close"></a>
+<a href="#" class="close"></a> <!--Botón que cierra el popup!-->
 <div class="contenido_popup">
 <?php echo get_string('tabletittle', 'local_facebook').$fullname; ?><br>
 <table class="tablesorter" border="0" width="100%"  style="font-size:13px" >
@@ -317,14 +305,13 @@ $data_array = record_sort($data_array, 'date', 'true');
 </thead>
 <tbody>
 
-
 <?php	
-
+//Dia y la hora de la publicación
 foreach ($data_array as $data){
 	$date=date("d/m/Y H:i",$data['date'] );
 	echo'	<tr>
 		
-<td><center>';
+<td><center>';//Imagenes de post, resource y link
 	if($data['dibujo']==1){
 
 		echo'<img src="images/post.png">';
@@ -339,7 +326,7 @@ foreach ($data_array as $data){
 
 	}
 
-
+//Muestra titulo, autor y fecha
 	echo'</center></td>
 
 <td><a href="'.$data['link'].'" target=â€�_blankâ€�>'.$data['title'].'</a></td>
@@ -356,7 +343,7 @@ echo '</tbody>
 
  </div>
   </div>';
-//ASDADSSADDSADASDAS
+
   
 }
 
@@ -367,6 +354,7 @@ echo '</tbody>
  
 		</div>
 	</div>
+	<!--PARTE INFERIOR!-->
 	<div id="separador">
 	<br>
 	</div>
@@ -375,7 +363,7 @@ echo '</tbody>
 	</div>
 	<div id="container2">
 <table width="100%">
- 
+<!-- Imagenes de logo y WEBC!--> 
  <tr>
  <td align="left"><img  src="images/logo_webcursos_abajo.png"> </td>
  <td align="right"><img  src="images/logo_abajo.png"></td>
@@ -389,7 +377,7 @@ $user_facebook_info->lasttimechecked=time();
 $DB->update_record('facebook_user', $user_facebook_info);
 }else{
 
-
+//Si es que el usuario no tiene conectada la cuenta con Fb
 	echo'
 
 
