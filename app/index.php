@@ -74,12 +74,11 @@ $connecturl= new moodle_url('/local/facebook/connect.php');
 $prioridadurl= new moodle_url('/local/facebook/app/prioridad.php');
 $colorurl= new moodle_url('/local/facebook/app/color.php');
 
-//Inicio de sesión que guarda la elección del color
-session_start();
+//Guarda la elección del color
+
 $ecolor='color0';
 $ecolor=$_REQUEST['color'];
-$_SESSION['color'] = $ecolor;
-    
+  
 ?>
 <!--Inicio barra lateral!-->
 <div id="wrapper">
@@ -116,7 +115,7 @@ $_SESSION['color'] = $ecolor;
 							<img src="images/lista.png">
 						</td>
 						<td>
-							<a href="<?php echo $colorurl; ?>" target=â€�_blankâ€�><?php echo 'Cambia el color'; ?></a>
+							<a href="#popup1" target=â€�_blankâ€�><?php echo 'Cambia el color'; ?></a>
 						</td>
 						</tr> 
 						<tr>
