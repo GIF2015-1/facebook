@@ -164,9 +164,31 @@ $_SESSION['color'] = $ecolor;
 		
 		</div>
 		<!-- FIN BARRA LATERAL !-->
+<!-- popup para cambio de color!-->		
+<div id ="popup1" class="overlay">
+		<div class="popup">
+		<h1> Cambiar color</h1>
+			<br>
+			<a class="close" href="#"></a>
+			<div class="content">
+		<H4>Selecciona el color de tu WEBC</h4>
+		<br>
+		<form action="index.php" method="GET"> 
+		<input type="radio" name="color" value="color0" checked="checked" /><img src="images/colornegro.jpg"> Colores por defecto 
+		<br>
+        	<input type="radio" name="color" value="color1" /><img src="images/colorazul.jpg"> Azul Oscuro WebC
+		<br>
+        	<input type="radio" name="color" value="color2" /><img src="images/colorvioleta.jpg"> Violeta WebC
+		<br>
+        	<input type="radio" name="color" value="color3" /><img src="images/colorgrafito.jpg"> Grafito WebC
+		<br><br>
+		<input type="image" src="images/guardarcambios.jpg" value="Guardar cambios">
 		
-		
-		<?php
+		</div>
+	</div>
+</div>	
+<!--Fin popup!-->
+<?php
 		
 $user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));//Obtiene los datos de facebook del usuario
 
