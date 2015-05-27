@@ -56,7 +56,7 @@
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 
-global $DB, $USER, $CFG, $ecolor; //variables globales
+global $DB, $USER, $CFG, $ecolor;
 require_once 'config.php';
 
 
@@ -68,13 +68,18 @@ $app_name= $CFG->fbkAppNAME;
 $app_email= $CFG->fbkemail;
 $tutorial_name=$CFG->fbktutorialsN;
 $tutorial_link=$CFG->fbktutorialsL;
-// moodle_url de los diferentes php necesarios//
 $messageurl= new moodle_url('/message/edit.php');
 $connecturl= new moodle_url('/local/facebook/connect.php');
 $colorurl= new moodle_url('/local/facebook/app/color.php');
 $prioridadurl=new moodle_url('/local/facebook/app/prioridad.php');
 ?>
-<!--Inicio barra lateral!-->
+<?php
+session_start();
+		$ecolor = $_SESSION['color'];
+    
+		?>
+
+
 <div id="wrapper">
 	<div id="container1" class="clearfix">
 		<br>
@@ -159,40 +164,45 @@ $prioridadurl=new moodle_url('/local/facebook/app/prioridad.php');
 		
 		</div>
 		<!-- FIN BARRA LATERAL !-->
-		<!-- Inicio de formulario para poder cambiar el color de WEBC !-->
+
 		<div class="cuerpo"><?php echo '<h1> Cambiar color</h1>
-		<br>
+			<br>
 		<H4>Selecciona el color de tu WEBC</h4>
 		<br>
-		<form action="index.php" method="post"> 
-		<input type="radio" name="color" value="color0" checked="checked" />
-		<img src="images/colornegro.jpg"> Colores por defecto 
+		<form action="index.php" method="GET"> 
+		<input type="radio" name="color" value="color0" checked="checked" /><img src="images/colornegro.jpg"> Colores por defecto 
 		<br>
-        	<input type="radio" name="color" value="color1" />
-        	<img src="images/colorazul.jpg"> Azul Oscuro WebC
+        <input type="radio" name="color" value="color1" /><img src="images/colorazul.jpg"> Azul Oscuro WebC
 		<br>
-        	<input type="radio" name="color" value="color2" />
-        	<img src="images/colorvioleta.jpg"> Violeta WebC
+        <input type="radio" name="color" value="color2" /><img src="images/colorvioleta.jpg"> Violeta WebC
 		<br>
-        	<input type="radio" name="color" value="color3" />
-        	<img src="images/colorgrafito.jpg"> Grafito WebC
+        <input type="radio" name="color" value="color3" /><img src="images/colorgrafito.jpg"> Grafito WebC
 		<br>
 		<br>
 		<input type="image" src="images/guardarcambios.jpg" value="Guardar cambios">
+		
+		
+		
+		
 		'?>
 		</div>
-		<!--FIN FORMULARIO CAMBIO COLOR!-->
 		
+		
+		
+		
+
 <div id="separador">
 	<br>
-</div>
-<div id="container2">
-	<table width="100%">
+	</div>
+	<div id="<?php echo $ecolor ?>">
+	<br>
+	</div>
+	<div id="container2">
+<table width="100%">
  
- 	<tr>
-		 <td align="left"><img  src="images/logo_webcursos_abajo.png"> </td>
-		 <td align="right"><img  src="images/logo_abajo.png"></td>
-	</tr>
- 	</table>
-</div>
-</div>
+ <tr>
+ <td align="left"><img  src="images/logo_webcursos_abajo.png"> </td>
+ <td align="right"><img  src="images/logo_abajo.png"></td>
+  </tr>
+ </table>
+	</div>
