@@ -56,9 +56,8 @@
 
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 
-global $DB, $USER, $CFG, $ecolor;
+global $DB, $USER, $CFG, $ecolor; // variables globales
 require_once 'config.php';
-
 
 
 $facebook = new Facebook($config);
@@ -68,18 +67,16 @@ $app_name= $CFG->fbkAppNAME;
 $app_email= $CFG->fbkemail;
 $tutorial_name=$CFG->fbktutorialsN;
 $tutorial_link=$CFG->fbktutorialsL;
+// Moodle url necesarios para la barra lateral
 $messageurl= new moodle_url('/message/edit.php');
 $connecturl= new moodle_url('/local/facebook/connect.php');
-$colorurl= new moodle_url('/local/facebook/app/color.php');
 $prioridadurl=new moodle_url('/local/facebook/app/prioridad.php');
-?>
 
-<?php
+// Variable con el color a elección
 session_start();
-		$ecolor = $_SESSION['color'];
-    
-		?>
-
+$ecolor = $_SESSION['color'];
+?>
+<!--Inicio Barra Lateral!-->
 <div id="wrapper">
 	<div id="container1" class="clearfix">
 		<br>
@@ -116,7 +113,7 @@ session_start();
 							<img src="images/lista.png">
 						</td>
 						<td>
-							<a href="<?php echo $colorurl; ?>" target=â€�_blankâ€�><?php echo 'Cambia el color'; ?></a>
+							<a href="#popup1" target=â€�_blankâ€�><?php echo 'Cambia el color'; ?></a>
 						</td>
 						</tr> 
 						<tr>
@@ -163,33 +160,27 @@ session_start();
 				data-width="175"  data-layout="box_count" data-show-faces="false" data-send="false"></div><center>
 		
 		</div>
-		<!-- FIN BARRA LATERAL !-->
+<!-- FIN BARRA LATERAL !-->
 <?php
 		
 $user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));
 
- 
-
-
-if($user_facebook_info!=false){
+ if($user_facebook_info!=false){
 $moodle_id=$user_facebook_info->moodleid;
 $lastvisit=$user_facebook_info->lasttimechecked;
 $user_info=$DB->get_record('user',array('id'=>$moodle_id));
 $user_course = enrol_get_users_courses($moodle_id); // busca cursos del usuario
-		
+// Inicio formulario con prioridad de los cursos		
 		 echo'
 <div class="cuerpo">
 <h1>Prioridad</h1>
-							<h2>Cambia tu prioridad</h2>
+<h2>Cambia tu prioridad</h2>
 							
 
  <ul id="cursos">';
 
- 
 
 foreach($user_course as $courses){
-	
-
 	
 	$fullname=$courses->fullname;
 	$courseid=$courses->id;
@@ -210,13 +201,8 @@ Prioridad <input type="text" name="prioridad" />
 //$DB->update_record('facebook_user', $user_facebook_info);
 		
 
-
-?>
-
-<?php //ASDADSSADDSADASDAS
-  
 }
-
+//Botón para guardar prioridad
 echo '<input type="image" src="images/guardarprioridad.jpg" value="Guardar prioridades">';''
 		
 ?>
@@ -247,7 +233,6 @@ echo '<input type="image" src="images/guardarprioridad.jpg" value="Guardar prior
 $user_facebook_info->lasttimechecked=time();
 $DB->update_record('facebook_user', $user_facebook_info);
 }else{
-
 
 	echo'
 
