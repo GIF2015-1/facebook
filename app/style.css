@@ -172,7 +172,8 @@ td{
 .curso{
 	
 	border-color: #CCC;
-	font-size:13px;
+	font-size:15px;
+	font-weight:bold;
 	text-transform:lowercase;
 	border-style: none;
 	float: left;
