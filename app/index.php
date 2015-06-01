@@ -115,7 +115,7 @@ $ecolor=$_REQUEST['color'];
 							<img src="images/lista.png">
 						</td>
 						<td>
-							<a href="#popup1" target=â€�_blankâ€�><?php echo 'Cambia el color'; ?></a>
+							<a href="#popup1"><?php echo get_string('changecolor', 'local_facebook'); ?></a>
 						</td>
 						</tr> 
 						<tr>
@@ -123,7 +123,7 @@ $ecolor=$_REQUEST['color'];
 							<img src="images/lista.png">
 						</td>
 						<td>
-							<a href="<?php echo $prioridadurl; ?>" target=â€�_blankâ€�><?php echo 'Cambia tu prioridad'; ?></a>
+							<a href="#popup2"><?php echo get_string('changepriority', 'local_facebook'); ?></a>
 						</td>
 						
 					</tr>   
@@ -166,7 +166,7 @@ $ecolor=$_REQUEST['color'];
 <!-- popup para cambio de color!-->		
 <div id ="popup1" class="overlay">
 		<div class="popup">
-		<h1> Cambiar color</h1>
+		<h1> <?php echo get_string('changecolor', 'local_facebook');?></h1>
 			<br>
 			<a class="close" href="#"></a>
 			<div class="content">
@@ -187,6 +187,24 @@ $ecolor=$_REQUEST['color'];
 	</div>
 </div>	
 <!--Fin popup!-->
+<!--Inicio popup2!-->
+<div id ="popup2" class="overlay">
+		<div class="popup">
+		<h1>Prioridad</h1>
+	<h2><?php echo get_string('changepriority', 'local_facebook');?></h2>
+			<br>
+			<a class="close" href="#"></a>
+			<div class="content">
+		
+	<ul id="cursos">';
+<?php 
+ echo 'cambiar la priorityyyytytyty'
+?>
+		
+		</div>
+	</div>
+</div>	
+<!--Fin popup2!-->
 <?php
 		
 $user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));//Obtiene los datos de facebook del usuario
