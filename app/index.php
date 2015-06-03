@@ -172,7 +172,7 @@ $ecolor=$_REQUEST['color'];
 			<div class="content">
 		<H4>Selecciona el color de tu WEBC</h4>
 		<br>
-		<form action="#" method="GET"> 
+		<form action="#" method="POST"> 
 		<input type="radio" name="color" value="color0" checked="checked" /><img src="images/colornegro.jpg"> Colores por defecto 
 		<br>
         	<input type="radio" name="color" value="color1" /><img src="images/colorazul.jpg"> Azul Oscuro WebC
