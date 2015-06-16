@@ -21,7 +21,8 @@
 		<div id="fb-root"></div>
 
 <script>
-
+		
+	
 	(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -51,16 +52,14 @@
  *
  * @package    local
  * @subpackage facebook
- * @copyright  2013 Francisco GarcÃ­a Ralph (francisco.garcia.ralph@gmail.com)
+ * @copyright  2015 El chipamogli (chipa@gmail.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 // Variables globales
-global $DB, $USER, $CFG, $comment, $ecolor;
+global $DB, $USER, $CFG, $comment, $color, $colorguardado;
 require_once 'config.php';
-
-
+	  
 //Inicio Fb
 $facebook = new Facebook($config);
 $facebook_id= $facebook->getUser();
@@ -74,10 +73,11 @@ $connecturl= new moodle_url('/local/facebook/connect.php');
 $prioridadurl= new moodle_url('/local/facebook/app/prioridad.php');
 $colorurl= new moodle_url('/local/facebook/app/color.php');
 
-//Guarda la elección del color
 
-$ecolor='color0';
-$ecolor=$_REQUEST['color'];
+//Guarda la elección del color
+$user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));//Obtiene los datos de facebook del usuario
+$color=$user_facebook_info->color;
+
   
 ?>
 <!--Inicio barra lateral!-->
@@ -163,7 +163,8 @@ $ecolor=$_REQUEST['color'];
 		
 		</div>
 		<!-- FIN BARRA LATERAL !-->
-<!-- popup para cambio de color!-->		
+<!-- popup para cambio de color!-->	
+		
 <div id ="popup1" class="overlay">
 		<div class="popup">
 		<h1> <?php echo get_string('changecolor', 'local_facebook');?></h1>
@@ -172,39 +173,22 @@ $ecolor=$_REQUEST['color'];
 			<div class="content">
 		<H4>Selecciona el color de tu WEBC</h4>
 		<br>
-		<form action="#" method="POST"> 
-		<input type="radio" name="color" value="color0" checked="checked" /><img src="images/colornegro.jpg"> Colores por defecto 
+		<form action="color.php" method="POST"> 
+		<input type="radio" name="color" value="0" checked="checked" /><img src="images/colornegro.jpg"> Colores por defecto 
 		<br>
-        	<input type="radio" name="color" value="color1" /><img src="images/colorazul.jpg"> Azul Oscuro WebC
+        	<input type="radio" name="color" value="1" /><img src="images/colorazul.jpg"> Azul Oscuro WebC
 		<br>
-        	<input type="radio" name="color" value="color2" /><img src="images/colorvioleta.jpg"> Violeta WebC
+        	<input type="radio" name="color" value="2" /><img src="images/colorvioleta.jpg"> Violeta WebC
 		<br>
-        	<input type="radio" name="color" value="color3" /><img src="images/colorgrafito.jpg"> Grafito WebC
+        	<input type="radio" name="color" value="3" /><img src="images/colorgrafito.jpg"> Grafito WebC
 		<br><br>
 		<input type="image" src="images/guardarcambios.jpg" value="Guardar cambios">
-		
+		</form>
 		</div>
 	</div>
 </div>	
 <!--Fin popup!-->
-<!--Inicio popup2!-->
-<div id ="popup2" class="overlay">
-		<div class="popup">
-		<h1>Prioridad</h1>
-	<h2><?php echo get_string('changepriority', 'local_facebook');?></h2>
-			<br>
-			<a class="close" href="#"></a>
-			<div class="content">
-		
-	<ul id="cursos">';
-<?php 
- echo 'cambiar la priorityyyytytyty'
-?>
-		
-		</div>
-	</div>
-</div>	
-<!--Fin popup2!-->
+
 <?php
 		
 $user_facebook_info=$DB->get_record('facebook_user',array('facebookid'=> 2,'status'=>1));//Obtiene los datos de facebook del usuario
@@ -213,9 +197,51 @@ if($user_facebook_info!=false){
 //Asigna a cada variable de valor de $user_facebook_info
 $moodle_id=$user_facebook_info->moodleid;
 $lastvisit=$user_facebook_info->lasttimechecked;
+$color=$user_facebook_info->color;
 $user_info=$DB->get_record('user',array('id'=>$moodle_id));
 $user_course = enrol_get_users_courses($moodle_id); // busca cursos del usuario
  //Cuerpo de WEBC
+ ?>
+
+<!--Inicio popup2!-->
+<div id ="popup2" class="overlay">
+<div class="popup">
+<h1>Prioridad</h1>
+<h2><?php echo get_string('changepriority', 'local_facebook');?></h2>
+			<br>
+			<a class="close" href="#"></a>
+			<div class="content">
+		
+	<ul id="cursos">
+<form action="prioridad.php" method "POST">
+<?php 
+foreach($user_course as $courses){
+	$fullname=$courses->fullname;
+	$courseid=$courses->id;
+	$shortname=$courses->shortname;
+	
+	
+	echo'<li class="curso"> <img src="images/lista_curso.png"> '.$fullname.'</p><br>
+<input type="text" name="curso'.$courseid.'" /> 
+
+		<br>
+		<br>
+	</li>';
+	
+	
+		}
+		echo '<input type="image" src="images/guardarprioridad.jpg" value="Guardar prioridades">';
+		
+							
+?>
+		</form>
+		</div>
+	</div>
+</div>	
+<!--Fin popup2!--> 
+
+<?php 
+
  echo'
 <div class="cuerpo">
 <h1>'.get_string('courses', 'local_facebook').'</h1>
@@ -249,9 +275,9 @@ foreach($user_course as $courses){
 	
 	
 	$total = $totalpost+$totalresource+$totalurl;
-// Muestra los cursos del alumno	
+// Muestra los cursos del alumno
 echo'<a class="inline link_curso" href="#'.$courseid.'"><li class="curso">
-<p class="'.$ecolor.'"><img src="images/lista_curso.png"> '.$fullname.'</p>';
+<p class="color'.$color.'"><img src="images/lista_curso.png"> '.$fullname.'</p>';
 //Muestra los globos de notificacion en los cursos
 if($total > 0){
 echo'<span class="numero_notificaciones">'.$total.'</span>
@@ -328,8 +354,8 @@ $data_array = record_sort($data_array, 'date', 'true');
 
 			</li></a>
 <!--Novedades de cada ramo!-->
-<div class="popup_curso" id="<?php echo $courseid ?>">
-<a href="#" class="close"></a> <!--Botón que cierra el popup!-->
+<div class="popup_curso" name='pupop' id="<?php echo $courseid ?>">
+<a href="index.php" class="close"></a> <!--Botón que cierra el popup!-->
 <div class="contenido_popup">
 <?php echo get_string('tabletittle', 'local_facebook').$fullname; ?><br>
 <table class="tablesorter" border="0" width="100%"  style="font-size:13px" >
@@ -397,7 +423,7 @@ echo '</tbody>
 	<div id="separador">
 	<br>
 	</div>
-	<div id="<?php echo $ecolor ?>">
+	<div id="<?php echo 'color'.$color ?>">
 	<br>
 	</div>
 	<div id="container2">
