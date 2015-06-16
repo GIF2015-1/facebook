@@ -173,7 +173,6 @@ td{
 	
 	border-color: #CCC;
 	font-size:15px;
-	font-weight:bold;
 	text-transform:lowercase;
 	border-style: none;
 	float: left;
@@ -192,7 +191,7 @@ td{
 	border: 1px solid rgb(225, 225, 225) !important;
         background: rgb(230,230,230);
 
-	
+	font-weight:bold;
 	position:relative;
 }
 
